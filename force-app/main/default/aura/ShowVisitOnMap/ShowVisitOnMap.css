@@ -1,0 +1,9 @@
+.THIS .nextDateButton{
+    margin-left:5%;
+    margin-top:1.4rem;
+}
+.THIS .previousDateButton{
+    float:right;
+    margin-right:5%;
+    margin-top:1.4rem;
+}

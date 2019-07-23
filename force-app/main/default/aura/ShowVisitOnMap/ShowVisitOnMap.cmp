@@ -1,0 +1,63 @@
+<!-- Lightning component show visit on map -->
+<aura:component controller="ShowVisitOnMapController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="mapMarkers" type="Object"/>
+    <aura:attribute name="VisitPlanningRecords" type="List" />
+    <aura:attribute name="center" type="Object" />
+    <aura:attribute name="zoomLevel" type="Integer" default="15"/>
+    <aura:attribute name="markersTitle" type="String" />
+    <aura:attribute name="showFooter" type="Boolean" />
+    <aura:attribute name="selectedDate" type="Date" default=""/>
+    <aura:attribute name="subordinateList" type="List" />
+    <div class="slds-page-header" role="banner">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <lightning:icon size="small" iconName="standard:location" alternativeText="Visit Map" />
+            </div>
+            <div class="slds-media__body">
+                <p class="slds-page-header__title slds-truncate slds-align-middle" title="">View MAP</p>
+                <p class="slds-text-body--small slds-page-header__info">At a glance view of Visits</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="c-container" style="padding-bottom:1%;">
+        <lightning:layout >
+            <lightning:layoutItem flexibility="auto"  >
+                <lightning:buttonIcon  variant="container" iconName="utility:left" size="large"
+                                      class="previousDateButton" alternativeText="Previous Date"
+                                      onclick="{!c.onClickPreviousDateButton}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" >
+                <label class="slds-form-element__label topMarginDateInput">Select Date</label>
+                <ui:inputDate aura:id="idVisitDateOnMap" value="{!v.selectedDate}" 
+                              displayDatePicker="true" format="{!$Locale.dateFormat}" class=""
+                              change="{!c.onChangeDateFilterOfMap}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" >
+                <lightning:buttonIcon  variant="container" iconName="utility:right" 
+                                      class="nextDateButton" alternativeText="Next Date"
+                                      onclick="{!c.onClickNextDateButton}"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+    
+    
+    <ui:inputSelect aura:id="idSubordinate" label="Select Subordinate" change="{!c.onChangeSubordinateList}">
+        <aura:iteration items="{!v.subordinateList}" var="sb">
+            <ui:inputSelectOption text="{!sb.value}" label="{!sb.label}"/>
+        </aura:iteration>
+    </ui:inputSelect>
+    <aura:if isTrue="{!v.mapMarkers.length > 0}" >
+        <lightning:map
+                       mapMarkers="{!v.mapMarkers }"
+                       zoomLevel="{!v.zoomLevel }"
+                       >
+        </lightning:map>
+        <aura:set attribute="else">
+            <p style="color:red; text-align:center; margin-top:20px;">There are no visits planned for selected date.</p>
+        </aura:set>
+    </aura:if>
+    
+</aura:component>

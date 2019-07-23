@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Visit_Planning</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+       <members>AddVisits</members>
+       <members>CustomLookupComponent</members>
+       <members>CustomLookupResultComponent</members>
+       <members>selectLookupObjectRecordEvent</members>
+        <members>CloneVisitPlansEvent</members>
+       <members>VisitsPanel</members>
+       <members>Visit_Planning_Application</members>
+         <members>ShowVisitOnMap</members>
+         <members>CloneVisitPlans</members>
+       <name>AuraDefinitionBundle</name>
+   </types>
+    <types>
+        <members>ViewPlannedVisitController</members>
+        <members>VisitPlanningController</members>
+        <members>ShowVisitOnMapController</members>
+        <members>VisitPlanningTestDataHandler</members>
+        <members>TestShowVisitOnMapController</members>
+        <members>TestLoggerClass</members>
+        <members>TestVisitPlanningController</members>
+        <members>TestViewPlannedVisitController</members>
+        <members>Logger</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Visit_Planning_UtilityBar</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Log_Entry__c-Log Entry Layout</members>
+        <members>Visit_Report__c-Visit Report Layout</members>
+        <members>Visit_Plan__c-Visit Plan Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Log_Entry__c</members>
+        <members>Visit_Planning_Settings__c</members>
+        <members>Visit_Plan__c</members>
+        <members>Visit_Report__c</members>
+       
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>Log_Entry__c</members>
+        <members>Visit_Plan__c</members>
+        <members>Visit_Report__c</members>
+        <members>Add_Visits</members>
+         <members>View_Map</members>
+        <name>CustomTab</name>
+    </types>
+    
+    <types>
+        <members>Visit_Planning_Reports/All_Visits_SNM</members>
+        <members>Visit_Planning_Reports/Contact_Wise_Statuses_olt</members>
+        <members>Visit_Planning_Reports/Checked_In_Visits_4xv</members>
+        <members>Visit_Planning_Reports/User_wise_Visits_Fex</members>
+        <members>Visit_Planning_Reports/Missed_Visits_INZ</members>
+        
+        <members>Visit_Planning_Reports/Account_Wise_Visits_9bo</members>
+        <members>Visit_Planning_Reports/Lead_Wise_Visits_o7p</members>
+        <members>Visit_Planning_Reports/Planned_Visits_PDH</members>
+         <members>Visit_Planning_Reports/Checked_Out_Visits_p2z</members>
+        <name>Report</name>
+    </types>
+    <version>38.0</version>
+</Package>

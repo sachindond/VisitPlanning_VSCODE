@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Sample Component Event">
+    <aura:attribute name="isCloneButtonClick" type="boolean" default="false" />
+    <aura:attribute name="clonedDate" type="date" default="" />
+</aura:event>
