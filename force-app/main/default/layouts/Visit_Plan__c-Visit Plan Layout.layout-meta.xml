@@ -27,6 +27,10 @@
                 <behavior>Readonly</behavior>
                 <field>Check_Out_Comments__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Expenses__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

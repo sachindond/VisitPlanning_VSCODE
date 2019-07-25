@@ -83,6 +83,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Visit_Plan__c.Expenses__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Visit_Plan__c.Reason_For_Visit__c</field>
         <readable>false</readable>
     </fieldPermissions>

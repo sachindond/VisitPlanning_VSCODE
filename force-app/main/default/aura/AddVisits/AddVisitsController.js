@@ -40,7 +40,8 @@
                     // call helper to show toast message
                     helper.showToastMessage('Visit plan added successfully!','Success!','success');
                     var reasonForVisit = component.find("idVisitReason").set("v.value","");
-                    component.set("v.selectedLookUpRecord",{});
+                    var lookupCmpId = component.find('lookupCmpId');
+                    lookupCmpId.clearLookupMethod('ClearLookup');
                 }else{
                     helper.showToastMessage('Something went wrong! Please contact your administrator.','Error!','error');
                 }
@@ -50,21 +51,13 @@
   	},
     // This method nevigate from add component to view lightning component
     viewPlannedVisits: function(component, event, helper) {
-        /*
-        var evt = $A.get("e.force:navigateToComponent");
-        evt.setParams({
-            componentDef : "c:ViewPlannedVisits"
-            
-        });
-        evt.fire();
-        */
         var navService = component.find("navService");
         var pageReference = {
             "type": "standard__component",
             "attributes": {
                 "componentName": "c__ViewPlannedVisits"
             }, 
-            "state": {
+            "state":{
                 'message':'Navigating to visit plan view.'
             }
         };
@@ -80,8 +73,6 @@
         previousDay.setDate(currentDate.getDate() - 1);
         var setpreviousDate = $A.localizationService.formatDate(previousDay, "YYYY-MM-DD");
         component.set('v.selectedDate',setpreviousDate);
-        
-        
     },
     // method set Next date based on selected input date
     onClickNextDateButton :function (component, event,helper) {

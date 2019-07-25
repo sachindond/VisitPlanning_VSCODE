@@ -1,0 +1,5 @@
+<!-- This event basically used for lightnin overlay that is for confirmation window on delete of 
+visit planning -->
+<aura:event type="APPLICATION" description="Event to handle overlay Action" >
+    <aura:attribute name="message" type="String"/>
+</aura:event>

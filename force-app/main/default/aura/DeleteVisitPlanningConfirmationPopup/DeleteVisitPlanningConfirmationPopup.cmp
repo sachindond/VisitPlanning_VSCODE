@@ -1,0 +1,9 @@
+<!-- Create Small Popup Box -->
+<aura:component access="global">
+    <aura:registerEvent name="applicationEvent" type="c:DeleteVisitPlanningConfirmationEvt"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div class="slds-text-align_center slds-m-around_x-medium">
+        <lightning:button name="Yes" label="Yes" variant="brand" onclick="{!c.onClickYesButton}"/>
+        <lightning:button name="No" label="No" onclick="{!c.onClickNoButton}"/>
+    </div>
+</aura:component>

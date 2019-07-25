@@ -38,7 +38,7 @@
                     <option text="{!item.label}" value="{!item.value}"	/>
                 </aura:iteration>
             </lightning:select>
-            <c:CustomLookupComponent objectAPIName="{!v.selectedValue}" IconName="" 
+            <c:CustomLookupComponent objectAPIName="{!v.selectedValue}" IconName="" aura:id="lookupCmpId" 
                                      selectedRecord="{!v.selectedLookUpRecord}" label="Visit To"/>
             <ui:inputTextArea  aura:id="idVisitReason" label="Reason For Visit" value=""/>
         </p>

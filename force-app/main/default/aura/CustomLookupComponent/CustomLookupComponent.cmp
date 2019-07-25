@@ -7,6 +7,10 @@
     <aura:attribute name="IconName" type="string" default=""/>
     <aura:attribute name="label" type="string" default=""/>
     <aura:attribute name="Message" type="String" default=""/>
+    <aura:method name="clearLookupMethod" action="{!c.clear}" 
+                 description="Sample method with parameters"> 
+        <aura:attribute name="param1" type="String" default="parameter 1"/> 
+    </aura:method>
     
     <!--declare events hendlers-->  
     <aura:handler name="oSelectedRecordEvent" event="c:selectLookupObjectRecordEvent" action="{!c.handleComponentEvent}"/>

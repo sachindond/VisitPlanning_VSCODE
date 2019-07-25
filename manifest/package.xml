@@ -5,16 +5,21 @@
         <name>CustomApplication</name>
     </types>
     <types>
-       <members>AddVisits</members>
-       <members>CustomLookupComponent</members>
-       <members>CustomLookupResultComponent</members>
-       <members>selectLookupObjectRecordEvent</members>
-        <members>CloneVisitPlansEvent</members>
-       <members>VisitsPanel</members>
-       <members>Visit_Planning_Application</members>
-         <members>ShowVisitOnMap</members>
-         <members>CloneVisitPlans</members>
-       <name>AuraDefinitionBundle</name>
+    <members>AddVisits</members>
+    <members>CustomLookupComponent</members>
+    <members>CustomLookupResultComponent</members>
+    <members>selectLookupObjectRecordEvent</members>
+    <members>CloneVisitPlansEvent</members>
+    <members>DeleteVisitPlanningConfirmationEvt</members>
+    <members>VisitsPanel</members>
+    <members>DeleteVisitPlanningConfirmationPopup</members>
+    <members>Visit_Planning_Application</members>
+    <members>ShowVisitOnMap</members>
+    <members>CloneVisitPlans</members>
+    <members>CloneVisitPlansEvent</members>
+    <members>CheckoutVisitPlan</members>
+    <members>CheckoutVisitPlanEvt</members>
+    <name>AuraDefinitionBundle</name>
    </types>
     <types>
         <members>ViewPlannedVisitController</members>
