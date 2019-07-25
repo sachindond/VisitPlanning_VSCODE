@@ -15,9 +15,7 @@
         action.setCallback(this,function(res){
             console.log('Return Values *** ',res.getReturnValue());
             if(res.getReturnValue() == true){
-                 component.set('v.loaded',true);
                 helper.showToastMessage('Checked In Successfully!','Succcess!','success');
-                
             }else{
                 var checkoutVisitPlanEvt = component.getEvent("checkoutVisitPlanEvt"); 
                 checkoutVisitPlanEvt.setParams({"isCheckout" : false
@@ -43,7 +41,7 @@
     },
     // method to show toast message
     showToastMessage : function(message,title,type){
-        component.set('v.loaded',false);
+       
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
             "title":title ,
@@ -51,6 +49,7 @@
             "type":type
         });
         toastEvent.fire();
+        
         var navigateToComponent = $A.get("e.force:navigateToComponent");
         navigateToComponent.setParams({
             componentDef: "c:ViewPlannedVisits"       

@@ -1,0 +1,125 @@
+<aura:component controller="ViewPlannedVisitController"
+                implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="VisitPlanningRecords" type="List" />
+    <aura:attribute name="singleVisitPlanningRecord" type="Object"/>
+    <aura:attribute name="hideShowVisitPlan" type="boolean" default="true"/>
+    <aura:attribute name="visitPlanRecordId" type="string"/>
+    <aura:attribute name="selectedDate" type="Date" default=""/>
+    <aura:attribute name="editVisitPlanningRecord" type="list"/>
+    <aura:attribute name="userLatitude" type="decimal"/>
+    <aura:attribute name="userLongitude" type="decimal" />
+    <aura:attribute name="uploadedFilesList" type="string"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="isCheckout" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="totalPlannedVisits" type="integer" default="0"/>
+    <aura:attribute name="totalCheckedInVisits" type="integer" default="0"/>
+    <aura:attribute name="totalCheckedOutVisits" type="integer" default="0"/>
+    <aura:attribute name="totalMissedVisits" type="integer" default="0"/>
+    <aura:attribute name="isClone" type="boolean" default="false"/>
+    <aura:attribute name="clonedVisitPlanDate" type="Date" default=""/>
+   
+    <aura:handler event="c:DeleteVisitPlanningConfirmationEvt" action="{!c.handleDeleteConfirmation}"/>
+    <aura:handler name="cloneVisitPlansEvent" event="c:CloneVisitPlansEvent" action="{!c.handleCloneVisitPlansEvent}"/>
+    <aura:if isTrue="{!v.hideShowVisitPlan == true}">
+        
+        <div class="slds-page-header slds-page-header_record-home">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning:icon size="small" iconName="standard:screen" alternativeText="View Visits" />
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <p class="slds-page-header__title slds-truncate slds-align-middle" title="">View Visits</p>
+                                    <p style="margin-top:10px;" class="slds-text-body--small slds-page-header__info">
+                                        <lightning:badge label="{!v.totalPlannedVisits}" class="PlannedVisitBadge"/> 
+                                        <lightning:badge label="{!v.totalCheckedInVisits}" class="CheckInVisitBadge"/> 
+                                        <lightning:badge label="{!v.totalCheckedOutVisits}" class="CheckOutVisitBadge"/> 
+                                        <lightning:badge label="{!v.totalMissedVisits}" class="MissedVisitBadge"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <ul class="slds-button-group-list">
+                                <li>
+                                    <button class="slds-button slds-button_neutral" onclick="{!c.onClickCloneButton}">Clone</button>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-container" style="padding-bottom:1%;">
+            <lightning:layout >
+                <lightning:layoutItem flexibility="auto"  >
+                    <lightning:buttonIcon  variant="container" iconName="utility:left" size="large"
+                                          class="previousDateButton" alternativeText="Previous Date"
+                                          onclick="{!c.onClickPreviousDateButton}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" >
+                    <label class="slds-form-element__label topMarginDateInput">Select Date</label>
+                    <ui:inputDate aura:id="idVisitDate" value="{!v.selectedDate}" 
+                                  displayDatePicker="true" format="{!$Locale.dateFormat}" class=""
+                                  change="{!c.onChangeDateFilter}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" >
+                    <lightning:buttonIcon  variant="container" iconName="utility:right" 
+                                          class="nextDateButton" alternativeText="Next Date"
+                                          onclick="{!c.onClickNextDateButton}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        <ui:scrollerWrapper class="scrollerSize">
+            <aura:iteration items="{!v.VisitPlanningRecords}" var ="vp">
+                <ul class="slds-has-dividers_bottom-space colorWhite ">
+                    <li class="slds-item paddingZero">
+                        <lightning:card title="" class='addPadding'>
+                            <lightning:buttonIcon iconName="utility:delete" name="{!vp.recordId}" size="small" alternativeText="Delete" 
+                                                  class="floatRight paddingLeft backgroundWhite" 
+                                                  onclick="{!c.onClickDeleteButton}" />
+                            
+                            <lightning:buttonIcon iconName="utility:logout" name="{!vp.recordId}" 
+                                                  disabled="{!vp.status=='Planned' ? 'true': vp.status=='Checked Out' ? 'true':vp.status=='Missed' ? 'true':'false'}" 
+                                                  size="small" alternativeText="Check Out" class="floatRight backgroundWhite" 
+                                                  onclick="{!c.onClickCheckedOutButton}"/>
+                            <lightning:buttonIcon iconName="utility:checkin" name="{!vp.recordId}" 
+                                                  disabled="{!vp.status=='Checked In' ? 'true': vp.status=='Checked Out' ? 'true':vp.status=='Missed' ? 'true':'false'}" 
+                                                  size="small" alternativeText="Check In"  
+                                                  class="floatRight backgroundWhite" 
+                                                  onclick="{!c.onClickCheckedInButton}"/>
+                            <lightning:tile label="{!vp.lookupRecordName}" href="{!'salesforce1://sObject/'+ vp.recordId + '/view'}">
+                                <aura:set attribute="media">
+                                    <lightning:icon size="small" iconName="standard:today" alternativeText="Visit Plan" />
+                                </aura:set>
+                                <ul class="slds-list_Vertical slds-has-dividers_right">
+                                    <li >{!vp.visitRecordName}</li>
+                                    <li >{!vp.objectType}</li>
+                                    <li> <lightning:buttonIcon iconName="utility:light_bulb" size="large" variant="bare" iconClass="dark" alternativeText="Check In" class="{!vp.status=='Planned' ? 'PlannedVisit': vp.status=='Missed' ? 'MissedVisit': vp.status=='Checked In' ? 'CheckInVisit': vp.status=='Checked Out' ? 'CheckOutVisit':''}"/> {!vp.status}  </li>                           </ul>
+                            </lightning:tile>
+                        </lightning:card>
+                    </li>
+                </ul>
+            </aura:iteration>
+        </ui:scrollerWrapper>
+    </aura:if>
+    <aura:if isTrue="{!v.loaded==true}">
+        <lightning:spinner alternativeText="Loading" variant="brand" />
+    </aura:if>
+    <!-- Used to get yes no confirmation on delete -->
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <!--call clone component -->
+    <aura:if isTrue="{!v.isClone==true}">
+        <c:CloneVisitPlans selectedDate="{!v.selectedDate}"/>
+    </aura:if>
+    
+</aura:component>

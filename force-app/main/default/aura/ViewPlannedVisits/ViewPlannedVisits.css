@@ -1,0 +1,65 @@
+.THIS .floatRight{
+    float:right;
+   
+}
+.THIS .colorWhite{
+    background-color:white;
+}
+.THIS .paddingZero{
+   padding:0;
+   margin:0; 
+}
+.THIS .addPadding{
+    padding:2px;
+}
+.THIS .paddingLeft{
+    margin-left:4px;
+}
+.THIS .PlannedVisit{
+	background-color:white;
+	color:#46b8da; 
+}
+.THIS .CheckInVisit{
+	background-color:white;   
+    color:Orange;
+}
+.THIS .CheckOutVisit{
+	background-color:white;    
+    color:Green;    
+}
+.THIS .MissedVisit{
+	background-color:white;  
+    color:red;  
+    
+}
+.THIS.scrollerSize {
+    height: 100%;
+}
+.THIS .backgroundWhite{
+    background-color:white;
+}
+.THIS .PlannedVisitBadge{
+	background-color:#46b8da;
+	color:white; 
+}
+.THIS .CheckInVisitBadge{
+	background-color:Orange;   
+    color:white;
+}
+.THIS .CheckOutVisitBadge{
+	background-color:Green;    
+    color:White;    
+}
+.THIS .MissedVisitBadge{
+	background-color:#c03e3f;  
+    color:White;  
+}
+.THIS .nextDateButton{
+    margin-left:5%;
+    margin-top:1.8rem;
+}
+.THIS .previousDateButton{
+    float:right;
+    margin-right:5%;
+    margin-top:1.8rem;
+}

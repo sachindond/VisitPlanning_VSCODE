@@ -9,11 +9,9 @@
     <members>CustomLookupComponent</members>
     <members>CustomLookupResultComponent</members>
     <members>selectLookupObjectRecordEvent</members>
-    <members>CloneVisitPlansEvent</members>
+    <members>ViewPlannedVisits</members>
     <members>DeleteVisitPlanningConfirmationEvt</members>
-    <members>VisitsPanel</members>
     <members>DeleteVisitPlanningConfirmationPopup</members>
-    <members>Visit_Planning_Application</members>
     <members>ShowVisitOnMap</members>
     <members>CloneVisitPlans</members>
     <members>CloneVisitPlansEvent</members>
@@ -25,7 +23,6 @@
         <members>ViewPlannedVisitController</members>
         <members>VisitPlanningController</members>
         <members>ShowVisitOnMapController</members>
-        <members>VisitPlanningTestDataHandler</members>
         <members>TestShowVisitOnMapController</members>
         <members>TestLoggerClass</members>
         <members>TestVisitPlanningController</members>

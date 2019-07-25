@@ -1,3 +1,0 @@
-<aura:event type="COMPONENT" description="Delte Visits Event">
-	<aura:attribute type="String" name="VisitToDeleteID"></aura:attribute>
-</aura:event>
