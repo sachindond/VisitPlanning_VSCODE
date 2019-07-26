@@ -58,6 +58,7 @@
         <members>Visit_Report__c</members>
         <members>Add_Visits</members>
          <members>View_Map</members>
+         <members>View_Planned_Visits</members>
         <name>CustomTab</name>
     </types>
     
@@ -74,5 +75,11 @@
          <members>Visit_Planning_Reports/Checked_Out_Visits_p2z</members>
         <name>Report</name>
     </types>
+    <types>
+     <members>Visit_Planning_Dashboard</members>
+        <members>Visit_Planning_Dashboard/rOsWTojlajwAPkHpHxDXsgESipLgkc</members>
+        <name>Dashboard</name>
+    </types>
+
     <version>46.0</version>
 </Package>
