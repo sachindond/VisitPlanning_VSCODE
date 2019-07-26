@@ -41,7 +41,9 @@ public class TestViewPlannedVisitController {
         string recordId = vpRecord.Id;
         decimal checkoutLat = 18.234445;
         decimal checkoutLong = 18.234445;
-        ViewPlannedVisitController.updateCheckoutLocationOnVisitPlanningRecord(checkoutComments, recordId, checkoutLat, checkoutLong);
+        decimal expenses = 200;
+        ViewPlannedVisitController.updateCheckoutLocationOnVisitPlanningRecord(checkoutComments, recordId, checkoutLat, 
+                                                                               checkoutLong,expenses);
         
     }
     public static testMethod void testupdateCheckInLocationOnVisitPlanningRecord(){
@@ -141,7 +143,8 @@ public class TestViewPlannedVisitController {
         string recordId = vpRecord.Id;
         decimal checkoutLat = 18.234445;
         decimal checkoutLong = null;
-        ViewPlannedVisitController.updateCheckoutLocationOnVisitPlanningRecord(checkoutComments, recordId, checkoutLat, checkoutLong);
+        decimal expenses = 200;
+        ViewPlannedVisitController.updateCheckoutLocationOnVisitPlanningRecord(checkoutComments, recordId, checkoutLat, checkoutLong,expenses);
     }
     public static testMethod void testExceptionCloneVp(){
         Account a = new Account();

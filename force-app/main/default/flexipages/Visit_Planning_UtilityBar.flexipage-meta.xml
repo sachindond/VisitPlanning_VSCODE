@@ -9,6 +9,8 @@
         <type>Background</type>
     </flexiPageRegions>
     <masterLabel>Visit Planning UtilityBar</masterLabel>
-    <pageTemplate>one:utilityBarTemplateDesktop</pageTemplate>
+    <template>
+        <name>one:utilityBarTemplateDesktop</name>
+    </template>
     <type>UtilityBar</type>
 </FlexiPage>

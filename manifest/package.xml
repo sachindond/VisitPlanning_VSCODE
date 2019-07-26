@@ -49,7 +49,7 @@
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Visit_Planning_Permission_Set</members>
         <name>PermissionSet</name>
     </types>
     <types>
@@ -74,5 +74,5 @@
          <members>Visit_Planning_Reports/Checked_Out_Visits_p2z</members>
         <name>Report</name>
     </types>
-    <version>38.0</version>
+    <version>46.0</version>
 </Package>

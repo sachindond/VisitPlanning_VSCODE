@@ -3,27 +3,24 @@
     // we used date filter here.
     doInit : function(component, event, helper) {
         // set default date to date field 
+        console.log('***** doInit ****');
         var today = $A.localizationService.formatDate(new Date(), "YYYY-MM-DD");
-        console.log("Do Init today",today);
         component.set('v.selectedDate', today);
         //helper to get visit planning records
         helper.getAllListOfVisitPlanning(component, event, helper);
     },
     // method to show on checkout button click a text field to accept comments and upload files
     onClickCheckedOutButton :function (component, event) {
-        console.log('***** on click checkout button****');
+        console.log('***** onClickCheckedOutButton ****');
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId);
         //component.set("v.hideShowVisitPlan",false);
         var getAllRecords = component.get("v.VisitPlanningRecords");
-        console.log("*****VisitPlanningRecords",getAllRecords);
         for(var i = 0;i<getAllRecords.length;i++){
             if(getAllRecords[i].recordId ==recordId ){
-                console.log('****matching record found',getAllRecords[i]);
                 component.set("v.singleVisitPlanningRecord",getAllRecords[i]);
             }
         }
-        
         var navigateToComponent = $A.get("e.force:navigateToComponent");
         navigateToComponent.setParams({
             componentDef: "c:CheckoutVisitPlan",
@@ -36,12 +33,14 @@
     },
     // we store check in location and date time of user
     onClickCheckedInButton:function (component,event,helper) {
+        console.log('***** onClickCheckedInButton ****');
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId);
         helper.getLatLongOfLoggedInUser(component,event,helper);
     },
     // Method to delete visit plan record
     onClickDeleteButton:function (component,event,helper) {
+         console.log('***** onClickDeleteButton ****');
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId); 
         // called lightning overlays as confirmation box 
@@ -66,13 +65,13 @@
     // method get call on date filter change and get visit plan based 
     // on Visit Date matching with Date filter
     onChangeDateFilter :function (component, event,helper) {
-        console.log("*****on Change Date Filter ****");
+          console.log('***** onChangeDateFilter ****');
         helper.getAllListOfVisitPlanning(component, event,helper);
     },
     // method called when application event fire 
     handleDeleteConfirmation :function (component, event,helper) {
+        console.log('***** handleDeleteConfirmation ****');
         var message = event.getParam("message");
-        console.log("**message***",message);
         if(message == 'Yes')
         {
             helper.deleteVisitPlan(component,event,helper);
@@ -98,20 +97,19 @@
         helper.getAllListOfVisitPlanning(component, event,helper);
     },
     onClickCloneButton:function (component, event,helper) {
-        console.log("**onClickCloneButton***");
+        console.log('***** onClickCloneButton ****');
         component.set('v.isClone',true);
     },
     handleCloneVisitPlansEvent:function (component, event,helper) {
-        console.log("**onClickCloneButton***");
+        console.log("**handleCloneVisitPlansEvent***");
         var isCloneButtonClick = event.getParam("isCloneButtonClick"); 
         var clonedDate = event.getParam("clonedDate"); 
         component.set("v.clonedVisitPlanDate",clonedDate);
-        console.log("**handleCloneVisitPlansEvent --> isCloneButtonClick***",isCloneButtonClick);
-        console.log("**handleCloneVisitPlansEvent-->clonedDate***",clonedDate);
         if(isCloneButtonClick=='true'){
-            console.log("**isCloneButtonClick KIF--***",isCloneButtonClick);
             helper.cloneVisitPlans(component, event,helper);
-           
+        }
+        if(isCloneButtonClick =='false'){
+            component.set("v.isClone",false);
         }
     }
     

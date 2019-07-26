@@ -18,7 +18,7 @@ public class ViewPlannedVisitController {
     // Logic: Get the values from custom settings and prepare dynamic query.
     // Get the result and loop over it and fill the wrapper class
     // Need to get review from Vinit.
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<GetAllVisitsWrapper> getListOfAllVisitPlanning(string dateVar){
         system.debug('date field'+dateVar);
         try{
@@ -104,7 +104,8 @@ public class ViewPlannedVisitController {
     public static boolean updateCheckoutLocationOnVisitPlanningRecord(string checkoutComments, 
                                                                       string recordId, 
                                                                       decimal checkoutLat, 
-                                                                      decimal checkoutLong){
+                                                                      decimal checkoutLong,
+                                                                     decimal expenses){
         List<Visit_Plan__c> lstUpdateVisitPlan = new List<Visit_Plan__c>();
         try{
             // check record id and comment fields are not blank
@@ -114,6 +115,7 @@ public class ViewPlannedVisitController {
                 vp.Check_Out_Date_Time__c = datetime.now();
                 vp.Check_Out_Location__Latitude__s = checkoutLat;
                 vp.Check_Out_Location__Longitude__s = checkoutLong;
+                vp.Expenses__c = expenses;
                 lstUpdateVisitPlan.add(vp);
             }
             if(lstUpdateVisitPlan.size()>0){

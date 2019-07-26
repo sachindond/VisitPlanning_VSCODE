@@ -16,6 +16,10 @@
                                 value="{!v.singleVisitPlanningRecord.reasonForVisit}" disabled="true"/>
             <lightning:textarea name="checkoutComment" aura:id="idCheckoutComment" label="Comments" 
                                 value=""/>
+            <lightning:input type="number" name="currencyInput" aura:id="idExpenses" label="Expenses" 
+                             value="" 
+                             formatter="currency" 
+                             step="0.01"/>
             <lightning:fileUpload label="Attach Files"
                                   name="fileUploader"
                                   multiple="true"

@@ -26,12 +26,12 @@
                     </ui:message>
                     <label class="slds-form-element__label topMarginDateInput">Next Visit Plan Date</label>
                     <ui:inputDate aura:id="idVisitNextPlan" 
-                                  value="{!v.nextVisitPlanDate}" 
+                                  value="{!v.nextVisitPlanDate}" change="{!c.dateChange}" 
                                   displayDatePicker="true" format="dd/MM/yyyy" />
                 </div>
                 <footer class="slds-modal__footer">
                     <button class="slds-button slds-button_brand" onclick="{!c.onClickCloneButton}">Clone</button>
-                    <button class="slds-button slds-button_neutral">Cancel</button>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.onClickCancelButton}">Cancel</button>
                     
                 </footer>
             </div>

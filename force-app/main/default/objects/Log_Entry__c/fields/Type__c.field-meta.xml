@@ -13,14 +13,17 @@
             <value>
                 <fullName>Information</fullName>
                 <default>false</default>
+                <label>Information</label>
             </value>
             <value>
                 <fullName>Warning</fullName>
                 <default>false</default>
+                <label>Warning</label>
             </value>
             <value>
                 <fullName>Error</fullName>
                 <default>false</default>
+                <label>Error</label>
             </value>
         </valueSetDefinition>
     </valueSet>
