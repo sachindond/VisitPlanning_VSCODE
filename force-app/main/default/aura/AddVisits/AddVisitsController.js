@@ -2,41 +2,32 @@
     doInit : function(component, event, helper) {
         var today = $A.localizationService.formatDate(new Date(), "YYYY-MM-DD");
         component.set('v.selectedDate', today);
-		console.log("** do Init **");
-        helper.getObjectList(component, event, helper);
+		helper.getObjectList(component, event, helper);
 	},
 	saveVisits : function(component, event, helper) {
 		var selectedObjectAPIName = component.get('v.selectedValue');
         var selectedObjectRecord = component.get("v.selectedLookUpRecord");
-        console.log("****selectedLookUpRecord***",selectedObjectRecord);
         var selectedVisitDate = component.find("idVisitDate").get("v.value");
-        console.log("selectedVisitDate****",selectedVisitDate);
         var reasonForVisit = component.find("idVisitReason").get("v.value");
-        console.log("***reasonForVisit",reasonForVisit);
-        
         // save visit record
         if(typeof(selectedObjectRecord.Id)=='undefined'){
              helper.showToastMessage('Incomplete Information! Please make sure to select whom do you want to visit (Visit To).','Error!','error');
             return false;
         }
         if(reasonForVisit==''){
-            console.log("****reasonForVisit null");
             var visitsTextBox = component.find("idVisitReason");
             visitsTextBox.set("v.errors", [{message:"Please add reason for visit."}]);
             return false;
         }
-        
         var action = component.get("c.saveVisitPlanningRecord");
         action.setParams({'objectAPIName':selectedObjectAPIName,
                           'objectRecordId':selectedObjectRecord.Id,
                           'selectedVisitDate':selectedVisitDate,
                           'reasonForVisit' :reasonForVisit});
         action.setCallback(this,function(res){
-            
             if(res.getState()==='SUCCESS'){
                 var returnResponse = res.getReturnValue();
-                console.log("***Return After Save ***",returnResponse);
-                if(returnResponse == true){
+                   if(returnResponse == true){
                     // call helper to show toast message
                     helper.showToastMessage('Visit plan added successfully!','Success!','success');
                     var reasonForVisit = component.find("idVisitReason").set("v.value","");

@@ -23,7 +23,7 @@ public class ShowVisitOnMapController {
     // Method to get visit plan of logged in user with  lat long
     @AuraEnabled
     public static list<VisitPlanWrapper> getListOfVisitPlanRecords(date dateVar,string selectedUser){
-        system.debug('__getListOfVisitPlanRecords'+string.valueOf(dateVar));
+        system.debug('***getListOfVisitPlanRecords***');
         string stringDateVar = string.valueOf(dateVar);
         if(string.isNotBlank(stringDateVar) && string.isNotBlank(selectedUser)){
             try{
@@ -47,9 +47,9 @@ public class ShowVisitOnMapController {
                     // we use replace here to get name of correspoing lookup record
                     //string loggedInUserId = UserInfo.getUserId();
                     string strCompleteQuery = strBaseQuery+strLookupFields+strLookupFieldRecordName+' '+',Check_Out_Location__latitude__s, Check_Out_Location__longitude__s from Visit_Plan__c where Visit_Date__c ='+stringDateVar+' '+'and OwnerId=\''+selectedUser+'\''+' '+' and Check_Out_Location__longitude__s!=null'+ ' Order by Name';
-                    system.debug('**Complete QueryString ***'+strCompleteQuery);
+                    
                     List<Visit_Plan__c> lstOfVisitPlan = database.query(strCompleteQuery);
-                    system.debug('****list of visist plans *** '+lstOfVisitPlan);
+                   
                     if(lstOfVisitPlan.size()>0){
                         for(Visit_Plan__c vp :lstOfVisitPlan){
                             VisitPlanWrapper visitsWrapperObj = new VisitPlanWrapper();
@@ -69,7 +69,7 @@ public class ShowVisitOnMapController {
                         }
                     }
                 }
-                system.debug('*** list of visits Wrapper Class ***'+lstOfGetAllVisitWrapper);
+                
                 return lstOfGetAllVisitWrapper;
             }catch(exception oEx){
                 Logger.Log('Error','Line Number: ' + oEx.getLineNumber() + ' Message: ' + oEx.getMessage(), 'ShowVisitOnMapController.getListOfVisitPlanRecords', '');    
@@ -98,8 +98,8 @@ sObject get method throws an error so solution below method
     /** Method to Show list of SubOrdinate where logged in User as Manager Of some One **/
     @AuraEnabled
     public static List<SubordinateWrapper> getSubordinate(){
+        system.debug('*** getSubordinate ***');
         List<SubordinateWrapper> listSubordinate = new List<SubordinateWrapper>();
-        system.debug('listSubordinate**'+listSubordinate);
         for(User user :[SELECT name,Id FROM User WHERE IsActive = true 
                         and( ManagerId=: UserInfo.getUserId() or ID =:UserInfo.getUserId())]){
                             SubordinateWrapper subOrdinate = new SubordinateWrapper();

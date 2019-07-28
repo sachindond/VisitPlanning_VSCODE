@@ -20,7 +20,7 @@ public class ViewPlannedVisitController {
     // Need to get review from Vinit.
     @AuraEnabled(cacheable=true)
     public static List<GetAllVisitsWrapper> getListOfAllVisitPlanning(string dateVar){
-        system.debug('date field'+dateVar);
+        system.debug('** getListOfAllVisitPlanning **');
         try{
             List<GetAllVisitsWrapper> lstOfGetAllVisitWrapper = new List<GetAllVisitsWrapper>();
             List<string> lstOfLookupFields = new List<string>();
@@ -44,9 +44,7 @@ public class ViewPlannedVisitController {
                 // we use replace here to get name of correspoing lookup record
                 string loggedInUserId = UserInfo.getUserId();
                 string strCompleteQuery = strBaseQuery+strLookupFields+strLookupFieldRecordName+' '+' from Visit_Plan__c where Visit_Date__c ='+dateVar+' '+'and OwnerId=\''+loggedInUserId+'\'Order by Name';
-                system.debug('**Complete QueryString ***'+strCompleteQuery);
                 List<Visit_Plan__c> lstOfVisitPlan = database.query(strCompleteQuery);
-                system.debug('****list of visist plans *** '+lstOfVisitPlan);
                 if(lstOfVisitPlan.size()>0){
                     for(Visit_Plan__c vp :lstOfVisitPlan){
                         GetAllVisitsWrapper visitsWrapperObj = new GetAllVisitsWrapper();
@@ -59,7 +57,6 @@ public class ViewPlannedVisitController {
                         // dynamic logic to get values and name of lookup fields using custom setting
                         // Need review of VINIT: Looks Perfect!
                         for(string s : lstOfLookupFields){
-                            system.debug('****string lookup'+s);
                             if((string)vp.get(s)!=null){
                                 visitsWrapperObj.lookupRecordId =(string)vp.get(s);
                                 visitsWrapperObj.objectType = mapOfLookupApiWithObjLabel.get(s);
@@ -74,7 +71,6 @@ public class ViewPlannedVisitController {
                     }
                 }
             }
-            system.debug('*** list of visits Wrapper Class ***'+lstOfGetAllVisitWrapper);
             return lstOfGetAllVisitWrapper;
         }catch(exception oEx){
             Logger.Log('Error','Line Number: ' + oEx.getLineNumber() + ' Message: ' + oEx.getMessage(), 'ViewPlannedVisitController.getListOfAllVisitPlanning', '');    
@@ -106,6 +102,7 @@ public class ViewPlannedVisitController {
                                                                       decimal checkoutLat, 
                                                                       decimal checkoutLong,
                                                                      decimal expenses){
+        system.debug('**updateCheckoutLocationOnVisitPlanningRecord**');                                                                 
         List<Visit_Plan__c> lstUpdateVisitPlan = new List<Visit_Plan__c>();
         try{
             // check record id and comment fields are not blank
@@ -119,7 +116,7 @@ public class ViewPlannedVisitController {
                 lstUpdateVisitPlan.add(vp);
             }
             if(lstUpdateVisitPlan.size()>0){
-                system.debug('***list to update visit plan'+lstUpdateVisitPlan);
+              
                 update lstUpdateVisitPlan;
             }
             return true;
@@ -131,6 +128,7 @@ public class ViewPlannedVisitController {
     // Method to Update Check In Location Lat Long on Visit Planning Record
     @AuraEnabled
     public static boolean updateCheckInLocationOnVisitPlanningRecord(string recordId, decimal checkInLat, decimal checkInLong){
+        System.debug('**updateCheckInLocationOnVisitPlanningRecord**');
         List<Visit_Plan__c> lstToUpdateVisitPlanCheckInLocation = new List<Visit_Plan__c>();
         try{
             if(string.isNotBlank(recordId)){
@@ -142,8 +140,7 @@ public class ViewPlannedVisitController {
                 lstToUpdateVisitPlanCheckInLocation.add(vp);
             }
             if(lstToUpdateVisitPlanCheckInLocation.size()>0){
-                system.debug('**** Check in Update Location'+lstToUpdateVisitPlanCheckInLocation);
-                update lstToUpdateVisitPlanCheckInLocation;
+                 update lstToUpdateVisitPlanCheckInLocation;
             }
             return true;
             
@@ -155,7 +152,7 @@ public class ViewPlannedVisitController {
     // Method to delete Visit Planning Record
     @AuraEnabled
     public static boolean deleteVisitPlanningRecord(string recordId){
-        system.debug('*** delete Visit Plan ID ** '+recordId);
+        system.debug('*** deleteVisitPlanningRecord * ** ');
         try{
             if(string.isNotEmpty(recordId)){
                 delete [select id from Visit_Plan__c where id=:recordId];
@@ -170,7 +167,7 @@ public class ViewPlannedVisitController {
     // this method used in CloneVisitPlans : Lightning component
     @AuraEnabled
     public static boolean cloneVisitPlanRecords(string sourceVisitPlanDate, string cloneVisitPlanDate){
-        system.debug('*** sourceVisitPlanDate ***'+sourceVisitPlanDate+'***cloneVisitPlanDate'+cloneVisitPlanDate);
+        system.debug('*** cloneVisitPlanRecords ***');
         try{
             // get custom setting and prepare query 
             List<Visit_Planning_Settings__c> lstOfVisitPlanningCustomSetting = Visit_Planning_Settings__c.getall().values();
@@ -180,9 +177,7 @@ public class ViewPlannedVisitController {
                 strLookupFields += ','+ vpSettings.Lookup_Field_Name__c; 
             }
             string completeQuery = strBaseQuery+strLookupFields+' '+' from Visit_Plan__c where Visit_Date__c ='+sourceVisitPlanDate;
-            system.debug('***complete query'+completeQuery);
             List<Visit_Plan__c> lstOfVisitPlans = database.query(completeQuery);
-            system.debug('*** list of visit plan records ***'+lstOfVisitPlans);
             List<Visit_Plan__c> insertListOfClonedVisitPlans = new List<Visit_Plan__c>(); 
             if(lstOfVisitPlans.size()>0){
                 for(Visit_Plan__c vp : lstOfVisitPlans){

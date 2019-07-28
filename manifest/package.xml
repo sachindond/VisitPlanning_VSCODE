@@ -32,6 +32,7 @@
     </types>
     <types>
         <members>Visit_Planning_UtilityBar</members>
+       <members>Home_Page_Default</members>
         <name>FlexiPage</name>
     </types>
     <types>
@@ -45,7 +46,6 @@
         <members>Visit_Planning_Settings__c</members>
         <members>Visit_Plan__c</members>
         <members>Visit_Report__c</members>
-       
         <name>CustomObject</name>
     </types>
     <types>
@@ -68,7 +68,6 @@
         <members>Visit_Planning_Reports/Checked_In_Visits_4xv</members>
         <members>Visit_Planning_Reports/User_wise_Visits_Fex</members>
         <members>Visit_Planning_Reports/Missed_Visits_INZ</members>
-        
         <members>Visit_Planning_Reports/Account_Wise_Visits_9bo</members>
         <members>Visit_Planning_Reports/Lead_Wise_Visits_o7p</members>
         <members>Visit_Planning_Reports/Planned_Visits_PDH</members>
@@ -79,6 +78,10 @@
      <members>Visit_Planning_Dashboard</members>
         <members>Visit_Planning_Dashboard/rOsWTojlajwAPkHpHxDXsgESipLgkc</members>
         <name>Dashboard</name>
+    </types>
+    <types>
+        
+    
     </types>
 
     <version>46.0</version>

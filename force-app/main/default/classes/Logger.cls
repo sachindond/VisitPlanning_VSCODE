@@ -13,7 +13,7 @@ public class Logger {
             newEntry.Message__c = message;
             newEntry.Function__c = function;
             newEntry.Request_Body__c = requestBody;
-            System.debug('****log entry'+newEntry);
+          
             insert newEntry;
         }
         catch(Exception oEx)

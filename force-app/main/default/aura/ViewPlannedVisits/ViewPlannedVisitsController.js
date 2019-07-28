@@ -3,7 +3,7 @@
     // we used date filter here.
     doInit : function(component, event, helper) {
         // set default date to date field 
-        console.log('***** doInit ****');
+       
         var today = $A.localizationService.formatDate(new Date(), "YYYY-MM-DD");
         component.set('v.selectedDate', today);
         //helper to get visit planning records
@@ -11,7 +11,7 @@
     },
     // method to show on checkout button click a text field to accept comments and upload files
     onClickCheckedOutButton :function (component, event) {
-        console.log('***** onClickCheckedOutButton ****');
+       
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId);
         //component.set("v.hideShowVisitPlan",false);
@@ -33,14 +33,14 @@
     },
     // we store check in location and date time of user
     onClickCheckedInButton:function (component,event,helper) {
-        console.log('***** onClickCheckedInButton ****');
+        
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId);
         helper.getLatLongOfLoggedInUser(component,event,helper);
     },
     // Method to delete visit plan record
     onClickDeleteButton:function (component,event,helper) {
-         console.log('***** onClickDeleteButton ****');
+        
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId); 
         // called lightning overlays as confirmation box 
@@ -65,12 +65,12 @@
     // method get call on date filter change and get visit plan based 
     // on Visit Date matching with Date filter
     onChangeDateFilter :function (component, event,helper) {
-          console.log('***** onChangeDateFilter ****');
+         
         helper.getAllListOfVisitPlanning(component, event,helper);
     },
     // method called when application event fire 
     handleDeleteConfirmation :function (component, event,helper) {
-        console.log('***** handleDeleteConfirmation ****');
+       
         var message = event.getParam("message");
         if(message == 'Yes')
         {
@@ -97,11 +97,11 @@
         helper.getAllListOfVisitPlanning(component, event,helper);
     },
     onClickCloneButton:function (component, event,helper) {
-        console.log('***** onClickCloneButton ****');
+       
         component.set('v.isClone',true);
     },
     handleCloneVisitPlansEvent:function (component, event,helper) {
-        console.log("**handleCloneVisitPlansEvent***");
+       
         var isCloneButtonClick = event.getParam("isCloneButtonClick"); 
         var clonedDate = event.getParam("clonedDate"); 
         component.set("v.clonedVisitPlanDate",clonedDate);

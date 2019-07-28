@@ -1,6 +1,6 @@
 ({
     getAllListOfVisitPlanning : function(component, event, helper) {
-        console.log("***Helper : getAllListOfVisitPlanning");
+     
         var action = component.get('c.getListOfAllVisitPlanning');
         var dateFieldValue = component.get("v.selectedDate");
         action.setParams({'dateVar': dateFieldValue});
@@ -13,7 +13,7 @@
     },
     // method to update visitPlanning Record with Checkout Comments and latlong
     updateVisitPlanCheckoutLocation : function(component, event, helper,checkoutLat,checkoutLong) {
-        console.log("***Helper : updateVisitPlanCheckoutLocation");
+       
         var action = component.get('c.updateCheckoutLocationOnVisitPlanningRecord');
         var checkoutComments = component.find("idCheckoutComment").get("v.value");
         var recordId =  component.get("v.visitPlanRecordId");
@@ -50,7 +50,7 @@
     },
     // helper method to update Check In Geo location on visit planning
     updateVisitPlanCheckInLocation : function(component, event, helper,checkInLat,checkInLong) {
-        console.log("*****Helper : updateVisitPlanCheckInLocation*****");
+        
         var action = component.get('c.updateCheckInLocationOnVisitPlanningRecord');
         var recordId =  component.get("v.visitPlanRecordId");
         component.set('v.loaded',true);
@@ -74,7 +74,7 @@
     },
     // helper to delete visit planning record
     deleteVisitPlan:function(component,event,helper){
-        console.log("*****Helper deleteVisitPlan*****");
+      
         var action = component.get('c.deleteVisitPlanningRecord');
         var recordId =  component.get("v.visitPlanRecordId");
         component.set('v.loaded',true);
@@ -105,7 +105,7 @@
     },
     // method to set counts of visits planned,checkin,checkout,missed
     setTotalNumberOfVisitCount: function(component,listOfVisitPlanning){
-        console.log("*****Helper setTotalNumberOfVisitCount*****");
+       
         if(listOfVisitPlanning.length>0){
             var plannedVisits = 0;
             var checkoutVisits = 0;
@@ -137,7 +137,7 @@
         }
     },
     cloneVisitPlans:function(component,event,helper){
-        console.log("*** Helper : cloneVisitPlans");
+      
         var action = component.get("c.cloneVisitPlanRecords");
         var sourceVisitPlanDate = component.get("v.selectedDate");
         var clonedVisitPlanDate = component.get("v.clonedVisitPlanDate");

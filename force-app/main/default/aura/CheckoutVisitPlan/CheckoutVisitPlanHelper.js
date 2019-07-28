@@ -4,18 +4,16 @@
         var action = component.get('c.updateCheckoutLocationOnVisitPlanningRecord');
         var checkoutComments = component.find("idCheckoutComment").get("v.value");
         var expenses = component.find("idExpenses").get("v.value");
-        console.log("****checkoutComments",checkoutComments);
+       
         var recordId =  component.get("v.visitPlanRecordId");
-        console.log("****checkoutLat",checkoutLat);
-        console.log("****checkoutLong",checkoutLong);
-        console.log("recordId",recordId);
+        
         action.setParams({'checkoutComments': checkoutComments,
                           'recordId' :recordId,
                           'checkoutLat':checkoutLat,
                           'checkoutLong':checkoutLong,
                           'expenses':expenses});
         action.setCallback(this,function(res){
-            console.log('Return Values *** ',res.getReturnValue());
+           
             if(res.getReturnValue() == true){
                 helper.showToastMessage('Checked In Successfully!','Succcess!','success');
             }else{

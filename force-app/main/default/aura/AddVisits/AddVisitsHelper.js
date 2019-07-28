@@ -4,10 +4,8 @@
         var action = component.get("c.getObjectListFromCustomSetting");
         action.setCallback(this,function(res){
             if(res.getState()==="SUCCESS"){
-                console.log("*** return object list *** ",res.getReturnValue());
                 var options = [];
                 var returnObjectList = res.getReturnValue();
-                console.log("*** returnObjectList length *** ",returnObjectList.length);
                 if(returnObjectList.length>0){
                     for(var i=0;i<returnObjectList.length;i++){
                         if(i==0){
@@ -19,7 +17,6 @@
                     }
                     component.set('v.ObjectOptions', options);
                 }
-                console.log("**Object OPtions ***",options);
             }
         });
         $A.enqueueAction(action);
