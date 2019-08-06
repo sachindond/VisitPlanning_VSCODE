@@ -11,7 +11,7 @@
         var reasonForVisit = component.find("idVisitReason").get("v.value");
         // save visit record
         if(typeof(selectedObjectRecord.Id)=='undefined'){
-             helper.showToastMessage('Incomplete Information! Please make sure to select whom do you want to visit (Visit To).','Error!','error');
+            helper.showToastMessage('Incomplete Information! Please make sure to select whom do you want to visit (Visit To).','Error!','error');
             return false;
         }
         if(reasonForVisit==''){
@@ -19,6 +19,7 @@
             visitsTextBox.set("v.errors", [{message:"Please add reason for visit."}]);
             return false;
         }
+        
         var action = component.get("c.saveVisitPlanningRecord");
         action.setParams({'objectAPIName':selectedObjectAPIName,
                           'objectRecordId':selectedObjectRecord.Id,
@@ -27,7 +28,7 @@
         action.setCallback(this,function(res){
             if(res.getState()==='SUCCESS'){
                 var returnResponse = res.getReturnValue();
-                   if(returnResponse == true){
+                if(returnResponse == true){
                     // call helper to show toast message
                     helper.showToastMessage('Visit plan added successfully!','Success!','success');
                     var reasonForVisit = component.find("idVisitReason").set("v.value","");

@@ -2,8 +2,6 @@
     // In do init we fetch the list of visit planning
     // we used date filter here.
     doInit : function(component, event, helper) {
-        // set default date to date field 
-       
         var today = $A.localizationService.formatDate(new Date(), "YYYY-MM-DD");
         component.set('v.selectedDate', today);
         //helper to get visit planning records
@@ -11,7 +9,6 @@
     },
     // method to show on checkout button click a text field to accept comments and upload files
     onClickCheckedOutButton :function (component, event) {
-       
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId);
         //component.set("v.hideShowVisitPlan",false);
@@ -21,26 +18,16 @@
                 component.set("v.singleVisitPlanningRecord",getAllRecords[i]);
             }
         }
-        var navigateToComponent = $A.get("e.force:navigateToComponent");
-        navigateToComponent.setParams({
-            componentDef: "c:CheckoutVisitPlan",
-            componentAttributes: {
-                singleVisitPlanningRecord:component.get("v.singleVisitPlanningRecord"),
-                visitPlanRecordId:recordId
-            }
-        });
-        navigateToComponent.fire();
+        component.set("v.isCheckout",true);
     },
     // we store check in location and date time of user
     onClickCheckedInButton:function (component,event,helper) {
-        
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId);
         helper.getLatLongOfLoggedInUser(component,event,helper);
     },
     // Method to delete visit plan record
     onClickDeleteButton:function (component,event,helper) {
-        
         var recordId = event.getSource().get("v.name");
         component.set("v.visitPlanRecordId",recordId); 
         // called lightning overlays as confirmation box 
@@ -65,12 +52,10 @@
     // method get call on date filter change and get visit plan based 
     // on Visit Date matching with Date filter
     onChangeDateFilter :function (component, event,helper) {
-         
         helper.getAllListOfVisitPlanning(component, event,helper);
     },
     // method called when application event fire 
     handleDeleteConfirmation :function (component, event,helper) {
-       
         var message = event.getParam("message");
         if(message == 'Yes')
         {
@@ -96,12 +81,12 @@
         component.set('v.selectedDate',setNextDate);
         helper.getAllListOfVisitPlanning(component, event,helper);
     },
+    // method call on click of clone button
     onClickCloneButton:function (component, event,helper) {
-       
         component.set('v.isClone',true);
     },
+    // Method to handle clone visit plan event 
     handleCloneVisitPlansEvent:function (component, event,helper) {
-       
         var isCloneButtonClick = event.getParam("isCloneButtonClick"); 
         var clonedDate = event.getParam("clonedDate"); 
         component.set("v.clonedVisitPlanDate",clonedDate);
@@ -110,6 +95,16 @@
         }
         if(isCloneButtonClick =='false'){
             component.set("v.isClone",false);
+        }
+    },
+    // method to handle checkout event
+    handleCheckoutEvent :function (component, event,helper) {
+        var isCheckout = event.getParam("isCheckout"); 
+        if(isCheckout == true){
+            helper.getAllListOfVisitPlanning(component, event,helper);
+            component.set("v.isCheckout",false);
+        }else{
+            component.set("v.isCheckout",false);
         }
     }
     

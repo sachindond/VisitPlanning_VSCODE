@@ -1,15 +1,9 @@
 <aura:component controller="ViewPlannedVisitController"
-                implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" access="global" >
     <aura:attribute name="VisitPlanningRecords" type="List" />
     <aura:attribute name="singleVisitPlanningRecord" type="Object"/>
-    <aura:attribute name="hideShowVisitPlan" type="boolean" default="true"/>
     <aura:attribute name="visitPlanRecordId" type="string"/>
     <aura:attribute name="selectedDate" type="Date" default=""/>
-    <aura:attribute name="editVisitPlanningRecord" type="list"/>
-    <aura:attribute name="userLatitude" type="decimal"/>
-    <aura:attribute name="userLongitude" type="decimal" />
-    <aura:attribute name="uploadedFilesList" type="string"/>
-    <aura:attribute name="loaded" type="Boolean" default="false" />
     <aura:attribute name="isCheckout" type="Boolean" default="false" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="totalPlannedVisits" type="integer" default="0"/>
@@ -18,12 +12,14 @@
     <aura:attribute name="totalMissedVisits" type="integer" default="0"/>
     <aura:attribute name="isClone" type="boolean" default="false"/>
     <aura:attribute name="clonedVisitPlanDate" type="Date" default=""/>
-   
+    <aura:attribute name="loaded" type="boolean" default="FALSE"/>
+    <aura:attribute name="latitude" type="decimal"/>
+    <aura:attribute name="longitude" type="decimal"/> 
+    
     <aura:handler event="c:DeleteVisitPlanningConfirmationEvt" action="{!c.handleDeleteConfirmation}"/>
     <aura:handler name="cloneVisitPlansEvent" event="c:CloneVisitPlansEvent" action="{!c.handleCloneVisitPlansEvent}"/>
-   
-        
-        <div class="slds-page-header slds-page-header_record-home">
+    <aura:handler name="checkoutVisitPlanEvt" event="c:CheckoutVisitPlanEvt" action="{!c.handleCheckoutEvent}"/>
+    <div class="slds-page-header slds-page-header_record-home">
             <div class="slds-page-header__row">
                 <div class="slds-page-header__col-title">
                     <div class="slds-media">
@@ -116,8 +112,9 @@
          	 <p style="color:red; text-align:center; margin-top:20px;">There are no visits planned for selected date.</p>
          </aura:set>
     </aura:if>
-    <aura:if isTrue="{!v.loaded==true}">
-        <lightning:spinner alternativeText="Loading" variant="brand" />
+    
+    <aura:if isTrue="{!v.loaded}">
+        <lightning:spinner variant="brand" size="large"/>
     </aura:if>
     <!-- Used to get yes no confirmation on delete -->
     <lightning:overlayLibrary aura:id="overlayLib"/>
@@ -125,5 +122,7 @@
     <aura:if isTrue="{!v.isClone==true}">
         <c:CloneVisitPlans selectedDate="{!v.selectedDate}"/>
     </aura:if>
-    
+    <aura:if isTrue="{!v.isCheckout==true}">
+        <c:CheckoutVisitPlan singleVisitPlanningRecord="{!v.singleVisitPlanningRecord}" visitPlanRecordId="{!v.visitPlanRecordId}"/>
+    </aura:if>
 </aura:component>

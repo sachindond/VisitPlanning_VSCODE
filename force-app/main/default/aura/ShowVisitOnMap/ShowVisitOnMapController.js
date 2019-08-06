@@ -7,7 +7,6 @@
     },
     // Method shows list of visit planned which is Checkout lat and long
     onChangeDateFilterOfMap : function(component, event, helper) {
-       
         helper.getVisitPlans(component, event, helper) ;
     },
     onChangeSubordinateList: function(component, event, helper) {

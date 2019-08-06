@@ -37,7 +37,7 @@
     // function for clear the Record Selaction 
     clear :function(component,event,heplper){
         var params = event.getParam(arguments);
-        
+        console.log('****Aura Method Called Params****',params);
         
         var pillTarget = component.find("lookup-pill");
         var lookUpTarget = component.find("lookupField"); 
@@ -58,7 +58,7 @@
         // get the selected Account record from the COMPONETN event 	 
         var selectedAccountGetFromEvent = event.getParam("recordByEvent");
         component.set("v.selectedRecord" , selectedAccountGetFromEvent); 
-       
+        console.log("***Selected Record ****",selectedAccountGetFromEvent.Name);
         var forclose = component.find("lookup-pill");
         $A.util.addClass(forclose, 'slds-show');
         $A.util.removeClass(forclose, 'slds-hide');

@@ -1,42 +1,16 @@
 ({
+    // helper to get all visit planning records
     getAllListOfVisitPlanning : function(component, event, helper) {
-     
         var action = component.get('c.getListOfAllVisitPlanning');
         var dateFieldValue = component.get("v.selectedDate");
         action.setParams({'dateVar': dateFieldValue});
         action.setCallback(this,function(res){
             var listOfVisitPlanning = res.getReturnValue();
+            component.set("v.VisitPlanningRecords",[]);
             component.set("v.VisitPlanningRecords",listOfVisitPlanning);
             helper.setTotalNumberOfVisitCount(component,listOfVisitPlanning);
         });
         $A.enqueueAction(action);
-    },
-    // method to update visitPlanning Record with Checkout Comments and latlong
-    updateVisitPlanCheckoutLocation : function(component, event, helper,checkoutLat,checkoutLong) {
-       
-        var action = component.get('c.updateCheckoutLocationOnVisitPlanningRecord');
-        var checkoutComments = component.find("idCheckoutComment").get("v.value");
-        var recordId =  component.get("v.visitPlanRecordId");
-        component.set('v.loaded',true);
-        action.setParams({'checkoutComments': checkoutComments,
-                          'recordId' :recordId,
-                          'checkoutLat':checkoutLat,
-                          'checkoutLong':checkoutLong});
-        action.setCallback(this,function(res){
-            if(res.getReturnValue() == true){
-                component.set('v.loaded',false);
-                helper.showToastMessage('Checked out successfully!','Succcess!','success');
-                component.set("v.hideShowVisitPlan",true);
-                helper.getAllListOfVisitPlanning(component, event, helper);
-                component.set('v.loaded',false);
-                
-            }else{
-                component.set('v.loaded',false);
-                helper.showToastMessage('Check out failed! Please contact your administrator.','Error!','error');
-            }
-        });
-        $A.enqueueAction(action);
-        
     },
     // method to show toast message
     showToastMessage : function(message,title,type){
@@ -49,8 +23,9 @@
         toastEvent.fire();
     },
     // helper method to update Check In Geo location on visit planning
-    updateVisitPlanCheckInLocation : function(component, event, helper,checkInLat,checkInLong) {
-        
+    updateVisitPlanCheckInLocation : function(component, event, helper) {
+        var checkInLat = component.get("v.latitude");
+        var checkInLong = component.get("v.longitude");
         var action = component.get('c.updateCheckInLocationOnVisitPlanningRecord');
         var recordId =  component.get("v.visitPlanRecordId");
         component.set('v.loaded',true);
@@ -59,11 +34,12 @@
             'checkInLat':checkInLat,
             'checkInLong':checkInLong});
         action.setCallback(this,function(res){
-            if(res.getReturnValue() == true){
+            var state = res.getState();
+            if(state === "SUCCESS"){
                 component.set('v.loaded',false);
                 helper.showToastMessage('Checked In Successfully!','Succcess!','success');
                 helper.getAllListOfVisitPlanning(component, event, helper);
-                component.set("v.hideShowVisitPlan",true);
+                
             }else{
                 component.set('v.loaded',false);
                 helper.showToastMessage('Check In failed! Please contact your administrator.','Error!','error');
@@ -74,16 +50,13 @@
     },
     // helper to delete visit planning record
     deleteVisitPlan:function(component,event,helper){
-      
         var action = component.get('c.deleteVisitPlanningRecord');
         var recordId =  component.get("v.visitPlanRecordId");
-        component.set('v.loaded',true);
         action.setParams({'recordId' :recordId});
         action.setCallback(this,function(res){
             if(res.getReturnValue() == true){
-                component.set('v.loaded',false);
+                 helper.getAllListOfVisitPlanning(component, event, helper);
                 helper.showToastMessage('Visit Plan deleted successfully!','Succcess!','success');
-                helper.getAllListOfVisitPlanning(component, event, helper);
             }else{
                 helper.showToastMessage('Delete unsuccessful! Please contact your administrator.','Error!','error');
             }
@@ -92,20 +65,19 @@
     },
     // method to get lat long of logged in user
     getLatLongOfLoggedInUser : function(component,event,helper){
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(success);
-            function success(position) {
-                var usersCurrentLat = position.coords.latitude;
-                var usersCurrentLong = position.coords.longitude;
-                helper.updateVisitPlanCheckInLocation(component,event,helper,usersCurrentLat,usersCurrentLong);
-            }
-        }else {
-            error('Geo Location Is Not Supported');
-        }
+        var t0 = performance.now();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+                component.set("v.latitude",lat);
+                component.set("v.longitude",lon);                    
+            });
+             helper.updateVisitPlanCheckInLocation(component,event,helper); 
+        }  
     },
     // method to set counts of visits planned,checkin,checkout,missed
     setTotalNumberOfVisitCount: function(component,listOfVisitPlanning){
-       
         if(listOfVisitPlanning.length>0){
             var plannedVisits = 0;
             var checkoutVisits = 0;
@@ -136,8 +108,8 @@
             component.set("v.totalMissedVisits",0);
         }
     },
+    // helper method to clone the visits from source date to future plan date
     cloneVisitPlans:function(component,event,helper){
-      
         var action = component.get("c.cloneVisitPlanRecords");
         var sourceVisitPlanDate = component.get("v.selectedDate");
         var clonedVisitPlanDate = component.get("v.clonedVisitPlanDate");
@@ -148,6 +120,7 @@
                 helper.showToastMessage('Visit Plan Cloned successfully!','Succcess!','success');
                 if(res.getReturnValue()==true){
                     component.set('v.isClone',false);
+                    helper.getAllListOfVisitPlanning(component, event,helper);
                 }else{
                     helper.showToastMessage('Cloned unsuccessful! Please contact your administrator.','Error!','error'); 
                 }

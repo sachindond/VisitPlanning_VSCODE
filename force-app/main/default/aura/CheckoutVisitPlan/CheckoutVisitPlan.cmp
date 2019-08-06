@@ -1,39 +1,49 @@
 <aura:component controller="ViewPlannedVisitController"
-                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+                implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    <aura:registerEvent name="checkoutVisitPlanEvt" type="c:CheckoutVisitPlanEvt" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
     <aura:attribute name="uploadedFilesList" type="string"/>   
     <aura:attribute name="singleVisitPlanningRecord" type="Object"/>
     <aura:attribute name="visitPlanRecordId" type="string"/>
+    <aura:attribute name="firstname" type="string"/>
+    <aura:attribute name="latitude" type="decimal"/>
+    <aura:attribute name="longitude" type="decimal"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-    <lightning:navigation aura:id="navService"/>
-    <aura:registerEvent name="checkoutVisitPlanEvt" type="c:CheckoutVisitPlanEvt" />
-    <aura:attribute name="loaded" type="Boolean" default="false" />
-    <lightning:card title="Check Out Comment">
-        <aura:set attribute="actions">
-        </aura:set>
-        <p class="slds-p-horizontal_small">
-            <lightning:textarea required="true" name="reasonformeet" aura:id="idReasonForMeet" 
-                                label="Reason For Visit" 
-                                value="{!v.singleVisitPlanningRecord.reasonForVisit}" disabled="true"/>
-            <lightning:textarea name="checkoutComment" aura:id="idCheckoutComment" label="Comments" 
-                                value=""/>
-            <lightning:input type="number" name="currencyInput" aura:id="idExpenses" label="Expenses" 
-                             value="" 
-                             formatter="currency" 
-                             step="0.01"/>
-            <lightning:fileUpload label="Attach Files"
-                                  name="fileUploader"
-                                  multiple="true"
-                                  accept=".pdf, .png, .jpeg, .jpg"
-                                  recordId="{!v.visitPlanRecordId}"
-                                  onuploadfinished="{!c.uploadFilesOnVisitPlan}" />
-            
-        </p>
-        <p style="color:green;font-style:italic; font-size:10px; margin-left:13px;">{!v.uploadedFilesList}</p>
-        <aura:set attribute="footer">
-            <lightning:button variant="brand" label="Check Out" title="Check Out" onclick="{!c.onClickSaveVisitPlanRecordCheckoutDetailsButton }"/>
-        </aura:set>
-    </lightning:card>
-     <aura:if isTrue="{!v.loaded==true}">
-        <lightning:spinner alternativeText="Loading" variant="brand" />
-    </aura:if>
+    
+    <div>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Checkout Visit</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:textarea required="true" name="reasonformeet" aura:id="idReasonForMeet" 
+                                        label="Reason For Visit" 
+                                        value="{!v.singleVisitPlanningRecord.reasonForVisit}" disabled="true"/>
+                    <lightning:textarea name="checkoutComment" aura:id="idCheckoutComment" label="Comments" 
+                                        value=""/>
+                    <lightning:input type="number" name="currencyInput" aura:id="idExpenses" label="Expenses" 
+                                     value="0.00" 
+                                     formatter="currency" 
+                                     step="0.01"/>
+                    <lightning:fileUpload label="Attach Files"
+                                          name="fileUploader"
+                                          multiple="true"
+                                          accept=".pdf, .png, .jpeg, .jpg"
+                                          recordId="{!v.visitPlanRecordId}"
+                                          onuploadfinished="{!c.uploadFilesOnVisitPlan}" />
+                      <p style="color:green;font-style:italic; font-size:10px;">{!v.uploadedFilesList}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand" label="Check Out" title="Check Out" onclick="{!c.onClickSaveVisitPlanRecordCheckoutDetailsButton }"/>
+                    <lightning:button  label="Cancel" title="Cancel" onclick="{!c.onClickCancelButton }"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <aura:if isTrue="{!v.loaded}">
+            <lightning:spinner variant="brand" size="large"/>
+        </aura:if>
+    </div>
 </aura:component>

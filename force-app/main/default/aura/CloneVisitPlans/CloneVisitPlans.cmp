@@ -4,7 +4,9 @@
 -->
 <aura:component access="global" >
     <aura:attribute name="selectedDate" type="Date" default=""/>
+    <aura:attribute name="today" type="Date" default=""/>
     <aura:attribute name="nextVisitPlanDate" type="Date" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:registerEvent name="cloneVisitPlansEvent" type="c:CloneVisitPlansEvent" />
     
     <div style="height:200px">
@@ -27,7 +29,7 @@
                     <label class="slds-form-element__label topMarginDateInput">Next Visit Plan Date</label>
                     <ui:inputDate aura:id="idVisitNextPlan" 
                                   value="{!v.nextVisitPlanDate}" change="{!c.dateChange}" 
-                                  displayDatePicker="true" format="dd/MM/yyyy" />
+                                  displayDatePicker="true" format="{!$Locale.dateFormat}" />
                 </div>
                 <footer class="slds-modal__footer">
                     <button class="slds-button slds-button_brand" onclick="{!c.onClickCloneButton}">Clone</button>

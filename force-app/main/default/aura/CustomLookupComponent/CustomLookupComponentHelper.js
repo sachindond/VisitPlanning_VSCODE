@@ -13,7 +13,7 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 var storeResponse = response.getReturnValue();
-                
+                console.log("****storeResponse",storeResponse);
                 if (storeResponse.length == 0) {
                     component.set("v.Message", 'No Result Found...');
                 } else {
